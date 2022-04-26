@@ -1,0 +1,5 @@
+registry: quay.io
+build-container-image: crio-test-agent
+
+containers:
+    crio-test-agent: Dockerfile.crio-test-agent
