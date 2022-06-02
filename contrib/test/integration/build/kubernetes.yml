@@ -88,16 +88,13 @@
     regexp: 'KUBECONFIG='
     state: present
 
-- name: ls directory
-  command: "ls {{ ansible_env.GOPATH }}/bin"
-  register: dir_out
-
-- name: debug content 
-  debug: "var={{item}}"
-  with_items: dir_out.stdout_lines
+- name: build kubectl
+  make:
+    chdir: "{{ ansible_env.GOPATH }}/src/k8s.io/kubernetes"
+    target: kubectl
 
 - name: install kubectl (for kubetest)
   copy:
-    src: "{{ ansible_env.GOPATH }}/src/k8s.io/kubernetes/_output/dockerized/bin/linux/amd64/kubectl"
+    src: "{{ ansible_env.GOPATH }}/src/k8s.io/kubernetes/_output/bin/kubectl"
     dest: "{{ ansible_env.GOPATH }}/bin/kubectl"
     mode: "preserve"
