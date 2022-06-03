@@ -17,7 +17,7 @@
       - glib2-devel
       - glibc-devel
         #- glibc-static
-        #- gpgme-devel
+      - gpgme-devel
       - hostname
       - iproute
       - iptables
