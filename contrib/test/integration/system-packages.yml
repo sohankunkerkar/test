@@ -39,6 +39,7 @@
         #- libvirt-python
       - libxml2-devel
       - libxslt-devel
+      - libcap-devel
       - make
       - mlocate
       - nfs-utils
