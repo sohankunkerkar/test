@@ -22,7 +22,7 @@
       - git
       - glib2-devel
       - glibc-devel
-        #- glibc-static
+      - glibc-static
       - gpgme-devel
       - hostname
       - iproute
