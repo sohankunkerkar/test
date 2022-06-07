@@ -38,6 +38,7 @@
       poll: 60
 
   always:
-
     - name: Re-enable SELinux after e2e tests
-      command: 'setenforce 1'
+      selinux:
+      policy: targeted
+      state: enforcing
