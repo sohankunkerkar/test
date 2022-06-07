@@ -28,8 +28,8 @@
       - libgpg-error-devel
       - libguestfs-tools
       - libseccomp-devel
-        #- libselinux-python
-        #- libsemanage-python
+      - libselinux-python.x86_64
+      - libsemanage-python
       - libvirt-client
         #- libvirt-python
       - libxml2-devel
