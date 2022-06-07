@@ -29,7 +29,7 @@
       - libguestfs-tools
       - libseccomp-devel
       - python3-libselinux
-        #- libsemanage-python
+      - python3-libsemanage
       - libvirt-client
         #- libvirt-python
       - libxml2-devel
