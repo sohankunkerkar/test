@@ -2,15 +2,10 @@
 - name: include variable to check if python2-dnf can be installed
   include: python3.yml
 
-- name: enable powertools
-  yum:
-    state: present
-    name: gpgme-devel
-    enablerepo: powertools
-
 - name: Make sure we have all required packages
   yum:
     state: present
+    enablerepo: powertools
     name:
       #- atomic-registries
       - container-selinux
