@@ -27,8 +27,9 @@
 - block:
 
     - name: Disable selinux during e2e tests
-      selinux: 'setenforce 0'
-        state: disabled
+      selinux:
+      policy: targeted
+      state: disabled
 
     - name: run e2e tests
       shell: "{{ e2e_shell_cmd | regex_replace('\\s+', ' ') }}"
@@ -41,7 +42,7 @@
     - name: Check command
       async_status: jid="{{ result_async.ansible_job_id }}"
       register: result
-      until: job_result.finished
+      until: result.finished
       retries: 100
       delay: 10
 
