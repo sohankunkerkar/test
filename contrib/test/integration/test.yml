@@ -55,7 +55,8 @@
 - block:
 
     - name: Disable selinux during integration tests
-      command: 'setenforce 0'
+      selinux:
+        state: disabled
       when: not integration_selinux_enabled
 
     - name: run integration tests
@@ -65,6 +66,8 @@
       environment: '{{ int_test_env }}'  # from vars.yml and main.yml
       async: '{{ int_test_timeout | default(60 * 30) }}'  # seconds
       poll: 30
+      ignore_errors: yes
+      
 
     - name: run integration tests with userNS enabled + alternate results file
       shell: "make localintegration >& {{ crio_integration_userns_filepath }}"
@@ -74,8 +77,19 @@
       async: '{{ int_test_timeout | default(60 * 30) }}'  # seconds
       poll: 30
       when: userns_int_test_skip is not defined or not userns_int_test_skip
+      ignore_errors: yes
+
+    - name: cat results_file
+      command:
+        cmd: cat "/root/.ansible_async/{{ result_async.ansible_job_id }}"
+      register: x
+      changed_when: false
+      check_mode: false
+
+    - debug:
+        var: x['stdout']
 
   always:
-
     - name: Re-enable SELinux after integration tests
-      command: 'setenforce 1'
+      selinux:
+        state: enforcing
