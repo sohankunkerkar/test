@@ -28,8 +28,8 @@
 
     - name: Disable selinux during e2e tests
       selinux:
-      policy: targeted
-      state: disabled
+        policy: targeted
+        state: disabled
 
     - name: run e2e tests
       shell: "{{ e2e_shell_cmd | regex_replace('\\s+', ' ') }}"
