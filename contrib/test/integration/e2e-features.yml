@@ -38,13 +38,24 @@
       async: '{{ 60 * 60 * 4 }}'  # seconds
       poll: 60
       register: result_async
-    
-    - name: Check command
-      async_status: jid="{{ result_async.ansible_job_id }}"
-      register: result
-      until: result.finished
-      retries: 100
-      delay: 10
+      ignore_errors: yes
+
+    - name: cat results_file
+      command:
+        cmd: cat "/root/.ansible_async/{{ result_async.ansible_job_id }}"
+      register: x
+      changed_when: false
+      check_mode: false
+
+    - debug:
+        var: x['stdout']    
+
+          #- name: Check command
+          #async_status: jid="{{ result_async.ansible_job_id }}"
+          #register: result
+          #until: result.finished
+          #retries: 100
+          #delay: 10
 
   always:
     - name: Re-enable SELinux after e2e tests
