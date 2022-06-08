@@ -40,5 +40,5 @@
   always:
     - name: Re-enable SELinux after e2e tests
       selinux:
-      policy: targeted
-      state: enforcing
+        policy: targeted
+        state: enforcing
