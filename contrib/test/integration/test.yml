@@ -66,6 +66,7 @@
       environment: '{{ int_test_env }}'  # from vars.yml and main.yml
       async: '{{ int_test_timeout | default(60 * 30) }}'  # seconds
       poll: 30
+      register: result_async
       ignore_errors: yes
       
 
@@ -76,6 +77,7 @@
       environment: '{{ int_test_env | combine(userns_int_test_env) }} '
       async: '{{ int_test_timeout | default(60 * 30) }}'  # seconds
       poll: 30
+      register: result_async2
       when: userns_int_test_skip is not defined or not userns_int_test_skip
       ignore_errors: yes
 
@@ -88,6 +90,16 @@
 
     - debug:
         var: x['stdout']
+
+    - name: cat results_file
+      command:
+        cmd: cat "/root/.ansible_async/{{ result_async2.ansible_job_id }}"
+      register: y
+      changed_when: false
+      check_mode: false
+
+    - debug:
+        var: y['stdout']
 
   always:
     - name: Re-enable SELinux after integration tests
