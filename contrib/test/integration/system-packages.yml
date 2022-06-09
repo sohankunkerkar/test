@@ -45,7 +45,7 @@
       - openssl
       - openssl-devel
       - pkgconfig
-        #- python
+      - python3
         #- python2-crypto
         #- python-devel
       - python-rhsm-certificates
