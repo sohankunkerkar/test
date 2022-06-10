@@ -34,10 +34,3 @@
       register: result_async
       ignore_errors: yes
 
-    - name: Check command
-      async_status: jid="{{ result_async.ansible_job_id }}"
-      register: result
-      until: result.finished
-      retries: 100
-      delay: 10
-
