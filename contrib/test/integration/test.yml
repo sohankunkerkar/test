@@ -53,9 +53,9 @@
   when: "build_kata | bool"
 
 - name: test file creation???
-    copy:
-      content: hello world
-      dest: /tmp/artifacts/async
+  copy:
+    content: hello world
+    dest: /tmp/artifacts/async
 
 - block:
     - name: run integration tests
