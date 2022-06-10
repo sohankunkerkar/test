@@ -61,7 +61,10 @@
       environment: '{{ int_test_env }}'  # from vars.yml and main.yml
       async: '{{ int_test_timeout | default(60 * 30) }}'  # seconds
       poll: 30
-      
+      register: result_async
+      ignore_errors: yes
+    - debug:
+        var: result_sync.stdout      
 
     - name: run integration tests with userNS enabled + alternate results file
       shell: "make localintegration >& {{ crio_integration_userns_filepath }}"
@@ -72,5 +75,9 @@
       environment: '{{ int_test_env | combine(userns_int_test_env) }} '
       async: '{{ int_test_timeout | default(60 * 30) }}'  # seconds
       poll: 30
+      register: result_async
+      ignore_errors: yes
+    - debug:
+        var: result_sync.stdout      
       when: userns_int_test_skip is not defined or not userns_int_test_skip
 
