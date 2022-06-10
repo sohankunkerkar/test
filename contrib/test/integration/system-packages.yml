@@ -28,8 +28,6 @@
       - libgpg-error-devel
       - libguestfs-tools
       - libseccomp-devel
-      - python3-libselinux
-      - python3-libsemanage
       - libvirt-client
         #- libvirt-python
       - libxml2-devel

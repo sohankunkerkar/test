@@ -52,6 +52,11 @@
 
   when: "build_kata | bool"
 
+- name: test file creation???
+      copy:
+        content: hello world
+        dest: /tmp/artifacts/async
+
 - block:
     - name: run integration tests
       shell: "make localintegration >& {{ crio_integration_filepath }}"
