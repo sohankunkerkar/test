@@ -1,7 +1,7 @@
 ---
 - name: clone cri-o 
   git: 
-    repo: https://github.com/cri-o/cri-o
+    repo: https://github.com/sohankunkerkar/cri-o/tree/fix-e2e-tests
     dest: "{{ ansible_env.GOPATH }}/src/github.com/cri-o/cri-o" 
     clone: yes 
     update: yes

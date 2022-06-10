@@ -1,5 +1,4 @@
 ---
-
 - name: Make testing output verbose so it can be converted to xunit
   lineinfile:
     dest: "{{ ansible_env.GOPATH }}/src/k8s.io/kubernetes/hack/make-rules/test.sh"
@@ -51,11 +50,6 @@
       with_items: "{{ kata_skip_ctr_tests }}"
 
   when: "build_kata | bool"
-
-- name: test file creation???
-  copy:
-    content: hello world
-    dest: /tmp/artifacts/async
 
 - block:
     - name: run integration tests
