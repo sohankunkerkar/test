@@ -1,8 +1,4 @@
 ---
-- name: avoid embedding version information
-  command:
-    cmd: git config --global --add safe.directory "{{ ansible_env.GOPATH }}/src/github.com/cri-o/cri-o"
-
 - name: clone cri-o 
   git: 
     repo: https://github.com/cri-o/cri-o/
