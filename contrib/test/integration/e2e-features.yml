@@ -33,4 +33,3 @@
       poll: 60
       register: result_async
       ignore_errors: yes
-
