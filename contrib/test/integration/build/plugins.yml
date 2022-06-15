@@ -4,7 +4,7 @@
   git:
     repo: "https://github.com/containernetworking/plugins.git"
     dest: "{{ ansible_env.GOPATH }}/src/github.com/containernetworking/plugins"
-    version: v1.0.1
+    version: v1.1.1
 
 - name: build plugins
   command: "./build_linux.sh"
@@ -20,6 +20,7 @@
   with_items:
     - bridge
     - dhcp
+    - flannel
     - host-local
     - ipvlan
     - loopback

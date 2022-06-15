@@ -1,4 +1,5 @@
 ---
+
 - name: Make testing output verbose so it can be converted to xunit
   lineinfile:
     dest: "{{ ansible_env.GOPATH }}/src/k8s.io/kubernetes/hack/make-rules/test.sh"
@@ -53,7 +54,7 @@
 
 - block:
     - name: run integration tests
-      shell: "make localintegration >& {{ crio_integration_filepath }}"
+      shell: "make localintegration 2>&1 | tee /tmp/artifacts/testout.txt"
       args:
         chdir: "{{ ansible_env.GOPATH }}/src/github.com/cri-o/cri-o"
       vars: 
@@ -61,13 +62,10 @@
       environment: '{{ int_test_env }}'  # from vars.yml and main.yml
       async: '{{ int_test_timeout | default(60 * 30) }}'  # seconds
       poll: 30
-      register: result_async
-      ignore_errors: yes
-    - debug:
-        var: result_sync.stdout      
 
     - name: run integration tests with userNS enabled + alternate results file
-      shell: "make localintegration >& {{ crio_integration_userns_filepath }}"
+      shell: "make localintegration 2>&1 | tee /tmp/artifacts/testout.txt"
+      #shell: "make localintegration >& {{ crio_integration_userns_filepath }}"
       args:
         chdir: "{{ ansible_env.GOPATH }}/src/github.com/cri-o/cri-o"
       vars: 
@@ -76,7 +74,6 @@
       async: '{{ int_test_timeout | default(60 * 30) }}'  # seconds
       poll: 30
       register: result_async
-      ignore_errors: yes
     - debug:
         var: result_sync.stdout      
       when: userns_int_test_skip is not defined or not userns_int_test_skip

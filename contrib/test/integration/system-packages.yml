@@ -23,13 +23,13 @@
       - iproute
       - iptables
       - krb5-workstation
-        #- libassuan-devel
+      #- libassuan-devel
       - libffi-devel
       - libgpg-error-devel
       - libguestfs-tools
       - libseccomp-devel
       - libvirt-client
-        #- libvirt-python
+      #- libvirt-python
       - libxml2-devel
       - libxslt-devel
       - libcap-devel
@@ -37,18 +37,18 @@
       - mlocate
       - nfs-utils
       - nmap-ncat
-        #- oci-register-machine
-        #- oci-systemd-hook
-        #- oci-umount
+      #- oci-register-machine
+      #- oci-systemd-hook
+      #- oci-umount
       - openssl
       - openssl-devel
       - pkgconfig
       - python3
-        #- python2-crypto
-        #- python-devel
+      #- python2-crypto
+      #- python-devel
       - python-rhsm-certificates
-        #- python-virtualenv
-        #- PyYAML
+      #- python-virtualenv
+      #- PyYAML
       - redhat-rpm-config
       - rpcbind
       - rsync

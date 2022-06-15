@@ -15,7 +15,7 @@
     - name: install Golang tools
       include: golang.yml
       vars:
-        version: "1.18"
+        version: "1.18.1"
 
     - name: clone build and install bats
       include: "build/bats.yml"
@@ -23,22 +23,22 @@
     - name: clone build and install cri-tools
       include: "build/cri-tools.yml"
       vars:
-        cri_tools_git_version: "v1.22.0"
+        cri_tools_git_version: "v1.24.2"
 
     - name: clone build and install kubernetes
       include: "build/kubernetes.yml"
       vars:
-        k8s_git_version: "release-1.21"
+        k8s_git_version: "master"
         k8s_github_fork: "kubernetes"
-        crio_socket: "/var/run/crio/crio.sock"
+        crio_socket: "/run/crio/crio.sock"
       when: "(cgroupv2 is undefined) or (cgroupv2 == False) | bool"
 
     - name: clone build and install kubernetes for cgroup v2
       include: "build/kubernetes.yml"
       vars:
-        k8s_git_version: "release-1.21"
+        k8s_git_version: "master"
         k8s_github_fork: "kubernetes"
-        crio_socket: "/var/run/crio/crio.sock"
+        crio_socket: "/run/crio/crio.sock"
       when: "cgroupv2 | bool"
 
     - name: clone build and install kubetest
@@ -81,7 +81,7 @@
     - name: install Golang tools
       include: golang.yml
       vars:
-        version: "1.18"
+        version: "1.18.1"
     - name: clone build and install cri-o
       include: "build/cri-o.yml"
 
@@ -120,11 +120,13 @@
   tasks:
     - name: install parallel
       include: build/parallel.yml
+    - name: clone build and install bats
+      include: "build/bats.yml"
     - name: clone build and install cri-tools
       include: "build/cri-tools.yml"
       vars:
         force_clone: true
-        cri_tools_git_version: "v1.22.0"
+        cri_tools_git_version: "v1.24.2"
     - name: run cri-o integration tests
       include: test.yml
 
@@ -139,7 +141,7 @@
       include: "build/cri-tools.yml"
       vars:
         force_clone: true
-        cri_tools_git_version: "v1.22.0"
+        cri_tools_git_version: "v1.24.2"
     - name: run critest validation and benchmarks
       include: critest.yml
 
@@ -154,9 +156,9 @@
       include: "build/kubernetes.yml"
       vars:
         force_clone: true
-        k8s_git_version: "release-1.21"
+        k8s_git_version: "master"
         k8s_github_fork: "kubernetes"
-        crio_socket: "/var/run/crio/crio.sock"
+        crio_socket: "/run/crio/crio.sock"
 
     - name: clone build and install kubetest
       include: "build/kubetest.yml"
@@ -177,17 +179,17 @@
       include: "build/kubernetes.yml"
       vars:
         force_clone: true
-        k8s_git_version: "release-1.21"
+        k8s_git_version: "master"
         k8s_github_fork: "kubernetes"
-        crio_socket: "/var/run/crio/crio.sock"
+        crio_socket: "/run/crio/crio.sock"
       when: "(cgroupv2 is undefined) or (cgroupv2 == False) | bool"
     - name: clone build and install kubernetes for cgroup v2
       include: "build/kubernetes.yml"
       vars:
         force_clone: true
-        k8s_git_version: "release-1.21"
+        k8s_git_version: "master"
         k8s_github_fork: "kubernetes"
-        crio_socket: "/var/run/crio/crio.sock"
+        crio_socket: "/run/crio/crio.sock"
       when: "cgroupv2 | bool"
 
     - name: clone build and install kubetest
