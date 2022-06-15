@@ -53,5 +53,5 @@
   args:
     chdir: /
   with_items:
-    - onsi/ginkgo/ginkgo
+    - onsi/ginkgo/ginkgo/v2
     - jteeuwen/go-bindata/go-bindata

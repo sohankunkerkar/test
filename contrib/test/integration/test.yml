@@ -73,8 +73,6 @@
       environment: '{{ int_test_env | combine(userns_int_test_env) }} '
       async: '{{ int_test_timeout | default(60 * 30) }}'  # seconds
       poll: 30
-      register: result_async
-    - debug:
-        var: result_sync.stdout      
+      register: result_async    
       when: userns_int_test_skip is not defined or not userns_int_test_skip
 
