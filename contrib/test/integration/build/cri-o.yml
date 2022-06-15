@@ -11,7 +11,7 @@
     path: "{{ ansible_env.GOPATH }}/src/github.com/cri-o/cri-o"
   register: dir_stat
 
-- name: "Replace line in file examples"
+- name: "Update the conmon version in dependencies.yaml"
   replace:
     path: "{{ ansible_env.GOPATH }}/src/github.com/cri-o/cri-o/dependencies.yaml"
     regexp: 'version: v2.1.0$'
