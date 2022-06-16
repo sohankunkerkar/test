@@ -72,7 +72,6 @@
         ansible_async_dir: '/tmp/artifacts/async'
       environment: '{{ int_test_env | combine(userns_int_test_env) }} '
       async: '{{ int_test_timeout | default(60 * 30) }}'  # seconds
-      poll: 30
-      register: result_async    
+      poll: 30    
       when: userns_int_test_skip is not defined or not userns_int_test_skip
 
