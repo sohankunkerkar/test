@@ -31,5 +31,4 @@
         chdir: "{{ ansible_env.GOPATH }}/src/k8s.io/kubernetes"
       async: '{{ 60 * 60 * 4 }}'  # seconds
       poll: 60
-      register: result_async
       ignore_errors: yes
