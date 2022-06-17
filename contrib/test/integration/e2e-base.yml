@@ -54,8 +54,8 @@
   shell: "{{ ansible_env.GOPATH }}/src/k8s.io/kubernetes/_output/bin/kubectl get nodes -o jsonpath='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}' 2>&1 | grep 'Ready=True'"
   register: kube_poll
   until: kube_poll.rc == 0
-  retries: 100
-  delay: 30
+  retries: 200
+  delay: 60
 
 - name: ensure directory exists for e2e reports
   file:
