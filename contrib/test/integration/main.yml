@@ -61,6 +61,9 @@
     - name: clone build and install networking plugins
       include: "build/plugins.yml"
 
+    - name: install conmon
+      include: build/conmon.yml
+    
     - name: install jq
       include: "build/jq.yml"
 
@@ -81,6 +84,9 @@
         version: "1.18.1"
     - name: clone build and install cri-o
       include: "build/cri-o.yml"
+    
+    - name: clone build and install conmon
+      include: "build/conmon.yml"
 
     - name: install jq
       include: build/jq.yml
