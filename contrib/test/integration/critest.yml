@@ -15,8 +15,8 @@
     state: started
     enabled: yes
 
-- name: Check the status of CRI-O
-  command: systemctl status crio.service
+- name: Check for journald logs
+  command: journalctl -xe
   register: system_output
 - debug:
     var: system_output['stdout']
