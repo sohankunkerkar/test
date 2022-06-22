@@ -9,6 +9,13 @@
       conmon_cgroup = "pod"
       seccomp_use_default_when_empty = false
 
+- name: Check the status of CRI-O
+  command: systemctl status crio.service
+  register: system_output
+- debug:
+    var: system_output['stdout']
+    verbosity: 2
+
 - name: enable and start CRI-O
   systemd:
     name: crio
