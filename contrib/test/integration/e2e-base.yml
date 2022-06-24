@@ -49,15 +49,9 @@
     enabled: yes
     daemon_reload: yes
 
-- name: debug kubectl 
-  shell:  "{{ ansible_env.GOPATH }}/src/k8s.io/kubernetes/_output/bin/kubectl get nodes -o jsonpath='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}' 2>&1" 
-  register: debugging
-- debug: 
-  var: debugging
-
 - name: wait for the cluster to be running
   # ref: https://kubernetes.io/docs/reference/kubectl/cheatsheet/
-  shell: "{{ ansible_env.GOPATH }}/src/k8s.io/kubernetes/_output/bin/kubectl get nodes -o jsonpath='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}' 2>&1 | grep 'Ready=True'"
+  shell: "{{ ansible_env.GOPATH }}/bin/kubectl get nodes -o jsonpath='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}' 2>&1 | grep 'Ready=True'"
   register: kube_poll
   until: kube_poll.rc == 0
   retries: 100
