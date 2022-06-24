@@ -55,6 +55,11 @@
 - debug: 
     var: result.stdout
 
+- name: wait for kubeconfig to be created
+  wait_for:
+    path: /var/run/kubernetes/admin.kubeconfig
+    state: present
+
 - name: wait for the cluster to be running
   # ref: https://kubernetes.io/docs/reference/kubectl/cheatsheet/
   shell: "{{ ansible_env.GOPATH }}/bin/kubectl get nodes -o jsonpath='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}' 2>&1 | grep 'Ready=True'"
