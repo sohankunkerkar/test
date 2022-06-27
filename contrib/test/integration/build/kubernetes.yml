@@ -83,13 +83,6 @@
     regexp: 'KUBECONFIG='
     state: present
 
-- name: cat kubeconfig? 
-  shell: |
-    cat /var/run/kubernetes/admin.kubeconfig 
-  register: file_content
-- debug: 
-    msg: "{{ file_content.stdout }}"
-
 - name: build kubectl
   make:
     chdir: "{{ ansible_env.GOPATH }}/src/k8s.io/kubernetes"
