@@ -83,6 +83,12 @@
     regexp: 'KUBECONFIG='
     state: present
 
+- name: Change kubeconfig file permission
+  file:
+    path: /var/run/kubernetes/admin.kubeconfig
+    owner: "{{ ansible_effective_user_id }}"
+    group: "{{ ansible_effective_group_id }}"
+
 - name: build kubectl
   make:
     chdir: "{{ ansible_env.GOPATH }}/src/k8s.io/kubernetes"
