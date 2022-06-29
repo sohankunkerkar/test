@@ -64,6 +64,9 @@
     - name: clone build and install networking plugins
       include: "build/plugins.yml"
 
+    - name: install conmon
+      include: build/conmon.yml
+
     - name: install jq
       include: "build/jq.yml"
 
