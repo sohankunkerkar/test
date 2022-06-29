@@ -1,25 +1,67 @@
 ---
+- hosts: all
+  remote_user: root
+  vars_files:
+    - "{{ playbook_dir }}/vars.yml"
+  tags:
+    - setup
+  tasks:
+    - name: set up the system
+      include: system.yml
 
-- hosts: "{{ host }}" 
-  remote_user: root 
-  environment: 
-    GOPATH: /usr/go
-  connection: local
-  vars_files: 
-    - "{{ playbook_dir }}/vars.yml" 
-  tags: 
-    - test 
-  tasks: 
-    - name: setup the system 
-      include: system.yml 
-    - name: install golang 
-      include: golang.yml 
-      vars: 
-        version: "1.18.1" 
-    - name: install bats 
+    - name: install Golang tools
+      include: golang.yml
+      vars:
+        version: "1.18.1"
+
+    - name: clone build and install bats
       include: "build/bats.yml"
 
-- hosts: "{{ host }}"
+    - name: clone build and install cri-tools
+      include: "build/cri-tools.yml"
+      vars:
+        cri_tools_git_version: "v1.24.2"
+
+    - name: clone build and install kubernetes
+      include: "build/kubernetes.yml"
+      vars:
+        k8s_git_version: "master"
+        k8s_github_fork: "kubernetes"
+        crio_socket: "/run/crio/crio.sock"
+      when: "(cgroupv2 is undefined) or (cgroupv2 == False) | bool"
+
+    - name: clone build and install kubernetes for cgroup v2
+      include: "build/kubernetes.yml"
+      vars:
+        k8s_git_version: "master"
+        k8s_github_fork: "kubernetes"
+        crio_socket: "/run/crio/crio.sock"
+      when: "cgroupv2 | bool"
+
+    - name: clone build and install kubetest
+      include: "build/kubetest.yml"
+      vars:
+        force_clone: true
+
+    - name: clone build and install runc
+      include: "build/runc.yml"
+      when: "build_runc | bool"
+
+    - name: clone build and install crun
+      include: "build/crun.yml"
+      when: "build_crun | bool"
+
+    - name: install Kata Containers
+      include: "build/kata.yml"
+      when: "build_kata | bool"
+
+    - name: clone build and install networking plugins
+      include: "build/plugins.yml"
+
+    - name: install jq
+      include: "build/jq.yml"
+
+- hosts: all
   remote_user: root
   vars_files:
     - "{{ playbook_dir }}/vars.yml"
@@ -42,7 +84,7 @@
     - name: run k8s e2e tests
       include: e2e.yml
 
-- hosts: "{{ host }}"
+- hosts: all
   remote_user: root
   vars_files:
     - "{{ playbook_dir }}/vars.yml"
@@ -72,4 +114,4 @@
         force_clone: true
 
     - name: run k8s e2e features tests
-      include: e2e-features.yml  
+      include: e2e-features.yml

@@ -110,38 +110,3 @@
         value: 1
         sysctl_set: yes
         ignoreerrors: yes
-
-- hosts: "{{ host }}" 
-  remote_user: root
-  vars_files:
-    - "{{ playbook_dir }}/vars.yml"
-  tags:
-    - integration
-  tasks:
-    - name: install parallel
-      include: build/parallel.yml
-    - name: clone build and install bats
-      include: "build/bats.yml"
-    - name: clone build and install cri-tools
-      include: "build/cri-tools.yml"
-      vars:
-        force_clone: true
-        cri_tools_git_version: "v1.24.2"
-    - name: run cri-o integration tests
-      include: test.yml
-
-- hosts: all
-  remote_user: root
-  vars_files:
-    - "{{ playbook_dir }}/vars.yml"
-  tags:
-    - critest
-  tasks:
-    - name: setup critest
-      include: "build/cri-tools.yml"
-      vars:
-        force_clone: true
-        cri_tools_git_version: "v1.24.2"
-    - name: run critest validation and benchmarks
-      include: critest.yml
-
