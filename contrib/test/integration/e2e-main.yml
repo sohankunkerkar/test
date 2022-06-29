@@ -1,6 +1,9 @@
 ---
 - hosts: "{{ host }}"
   remote_user: root
+  environment:
+    GOPATH: /usr/go
+  connection: local
   vars_files:
     - "{{ playbook_dir }}/vars.yml"
   tags:
