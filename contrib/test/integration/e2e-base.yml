@@ -66,6 +66,11 @@
 #   wait_for:
 #     path: /var/run/kubernetes/admin.kubeconfig
 #     state: present
+- name: Find /var/run/kubernetes files
+  find:
+    paths: /var/run/kubernetes
+  register: list_files
+- debug: msg=list_files
 
 - name: wait for the cluster to be running
   # ref: https://kubernetes.io/docs/reference/kubectl/cheatsheet/
