@@ -6,8 +6,6 @@ e2e_selinux_enabled: False
 node_e2e_selinux_enabled: False
 manage_ns_lifecycle: True
 
-GOPATH: ~/go
-
 build_runc: True
 build_crun: False
 build_kata: False

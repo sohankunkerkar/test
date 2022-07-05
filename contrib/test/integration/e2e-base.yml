@@ -50,28 +50,6 @@
     enabled: yes
     daemon_reload: yes
 
-# - name: debug kubectl 
-#   shell:  "{{ ansible_env.GOPATH }}/bin/kubectl get nodes" 
-#   register: result
-# - debug: 
-#     var: result.stdout
-
-#- name: Change kubeconfig file permission
-#  file:
-#    path: /var/run/kubernetes/admin.kubeconfig
-#    owner: "{{ ansible_effective_user_id }}"
-#    group: "{{ ansible_effective_group_id }}"
-
-# - name: wait for kubeconfig to be created
-#   wait_for:
-#     path: /var/run/kubernetes/admin.kubeconfig
-#     state: present
-- name: Find /var/run/kubernetes files
-  find:
-    paths: /var/run/kubernetes
-  register: list_files
-- debug: msg=list_files
-
 - name: wait for the cluster to be running
   # ref: https://kubernetes.io/docs/reference/kubectl/cheatsheet/
   shell: "{{ ansible_env.GOPATH }}/bin/kubectl get nodes -o jsonpath='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}' 2>&1 | grep 'Ready=True'"

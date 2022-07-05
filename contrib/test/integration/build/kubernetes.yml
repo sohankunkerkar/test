@@ -16,7 +16,7 @@
 - name: build kubernetes
   make:
     chdir: "{{ ansible_env.GOPATH }}/src/k8s.io/kubernetes"
-    target: all
+    target: clean
 
 - name: build kubernetes
   make:
@@ -83,11 +83,6 @@
     regexp: 'KUBECONFIG='
     state: present
 
-- name: build kubectl
-  make:
-    chdir: "{{ ansible_env.GOPATH }}/src/k8s.io/kubernetes"
-    target: kubectl
-
 - name: install kubectl (for kubetest)
   copy:
     src: "{{ ansible_env.GOPATH }}/src/k8s.io/kubernetes/_output/bin/kubectl"
@@ -97,5 +92,5 @@
 - name: copy kubectl (for e2e tests)
   copy:
     src: "{{ ansible_env.GOPATH }}/src/k8s.io/kubernetes/_output/bin/kubectl"
-    dest: /usr/bin/kubectl"
+    dest: /usr/bin/kubectl
     mode: "preserve"

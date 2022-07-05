@@ -30,7 +30,7 @@
     dest: "{{ ansible_user_dir }}/.profile"
     line: |
         # Added by Ansible from golang.yml
-        PATH={{ ansible_env.PATH }}:{{ GOPATH }}/bin:/usr/local/go/bin
+        PATH={{ ansible_env.PATH }}:{{ ansible_env.GOPATH }}:/usr/local/go/bin
     regexp: '^PATH='
     state: present
 
@@ -54,4 +54,9 @@
     chdir: /
   with_items:
     - onsi/ginkgo/v2/ginkgo
-    - jteeuwen/go-bindata/go-bindata
+
+- name: copy ginkgo (for e2e tests)
+  copy:
+    src: "{{ ansible_env.GOPATH }}/bin/ginkgo"
+    dest: /usr/bin/ginkgo
+    mode: "preserve"
